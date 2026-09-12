@@ -25,3 +25,22 @@ jobs:
 
       - name: Run the tests
         run: pytest test_calculator.py -v
+
+  lint:
+    name: Check Code Style
+    runs-on: ubuntu-latest
+    needs: test             # only runs if "test" job passes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pycodestyle
+        run: pip install pycodestyle
+
+      - name: Check code style
+        run: pycodestyle calculator.py --max-line-length=100
